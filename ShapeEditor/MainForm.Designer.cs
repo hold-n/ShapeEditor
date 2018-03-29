@@ -1,4 +1,4 @@
-﻿namespace Lab2
+﻿namespace ShapeEditor
 {
     partial class MainForm
     {

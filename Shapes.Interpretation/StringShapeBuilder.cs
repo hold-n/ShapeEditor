@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text.RegularExpressions;
-using System.Windows.Forms.VisualStyles;
-using Shapes;
 
-namespace Lab2
+namespace Shapes.Interpretation
 {
     public class StringShapeBuilder : IShapeBuilder
     {

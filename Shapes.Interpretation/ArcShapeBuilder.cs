@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Shapes;
 
-namespace Lab2
+namespace Shapes.Interpretation
 {
     public class ArcShapeBuilder : IShapeBuilder
     {

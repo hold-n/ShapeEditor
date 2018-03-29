@@ -2,27 +2,31 @@
 
 namespace Shapes
 {
+    /// <summary>
+    /// A class describing a pen and capable of creating pens by the description.
+    /// </summary>
     public class PenBillet
     {
-        private readonly int? width_;
-        private readonly Color color_;
-
         public PenBillet(Color color)
         {
-            color_ = color;
+            Color = color;
         }
 
         public PenBillet(Color color, int width)
         {
-            color_ = color;
-            width_ = width;
+            Color = color;
+            Width = width;
         }
+
+        public Color Color { get; }
+
+        public int? Width { get; }
 
         public Pen CreatePen()
         {
-            return width_.HasValue
-                ? new Pen(color_, width_.Value)
-                : new Pen(color_);
+            return Width.HasValue
+                ? new Pen(Color, Width.Value)
+                : new Pen(Color);
         }
     }
 }

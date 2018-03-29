@@ -2,6 +2,9 @@
 
 namespace Shapes
 {
+    /// <summary>
+    /// A mutable class containing settings for creating shapes.
+    /// </summary>
     public class DrawingContext
     {
         public BrushType BrushType { get; set; } = BrushType.Solid;

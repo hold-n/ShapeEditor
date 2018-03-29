@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Shapes.Interpretation;
 
-namespace Lab2
+namespace ShapeEditor
 {
     static class Program
     {
@@ -27,7 +28,7 @@ namespace Lab2
             shapeFactory.Register("ellipse", new EllipseShapeBuilder());
             shapeFactory.Register("string", new StringShapeBuilder());
 
-            var interpreter= new ShapeInterpreter(shapeFactory);
+            var interpreter = new ShapeInterpreter(shapeFactory);
             return new MainForm(interpreter);
         }
     }

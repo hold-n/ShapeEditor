@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Shapes;
 
-namespace Lab2
+namespace Shapes.Interpretation
 {
-    public class LineShapeBuilder : IShapeBuilder
+    public class EllipseShapeBuilder : IShapeBuilder
     {
         private const int ParamCount = 4;
 
@@ -19,7 +18,7 @@ namespace Lab2
             var intParameters = parameters.Select(int.Parse).ToList();
             var start = new Point(intParameters[0], intParameters[1]);
             var end = new Point(intParameters[2], intParameters[3]);
-            return new LineShape(start, end, context.CreatePenBillet());
+            return new EllipseShape(start, end, context.CreatePenBillet());
         }
     }
 }

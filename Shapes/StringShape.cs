@@ -2,27 +2,35 @@
 
 namespace Shapes
 {
+    /// <summary>
+    /// A string shape.
+    /// </summary>
     public class StringShape : IShape
     {
-        private readonly string text_;
         private readonly Point point_;
-        private readonly BrushBillet brushBillet_;
-        private readonly FontBillet fontBillet_;
-
+        
         public StringShape(string text, Point point, BrushBillet brushBillet, FontBillet fontBillet)
         {
-            text_ = text;
+            Text = text;
             point_ = point;
-            brushBillet_ = brushBillet;
-            fontBillet_ = fontBillet;
+            BrushBillet = brushBillet;
+            FontBillet = fontBillet;
         }
+
+        public BrushBillet BrushBillet { get; }
+
+        public FontBillet FontBillet { get; }
+
+        public Point Point => point_.Clone();
+
+        public string Text { get; }
 
         public void Draw(Graphics graphics)
         {
-            using (var brush = brushBillet_.CreateBrush())
-            using (var font = fontBillet_.CreateFont())
+            using (var brush = BrushBillet.CreateBrush())
+            using (var font = FontBillet.CreateFont())
             {
-                graphics.DrawString(text_, font, brush, point_);
+                graphics.DrawString(Text, font, brush, point_);
             }
         }
     }

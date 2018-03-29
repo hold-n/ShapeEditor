@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Shapes;
 
-namespace Lab2
+namespace Shapes.Interpretation
 {
+    /// <summary>
+    /// An interpreter creating shapes from their string representation.
+    /// </summary>
     public class ShapeInterpreter
     {
         private static readonly Regex ShapeRegex = new Regex(@"^(?<name>\w+)\((?<coords>[^\)]*)\)$");
@@ -19,7 +21,9 @@ namespace Lab2
 
         public IEnumerable<IShape> Interpret(string text, DrawingContext context)
         {
-            foreach (string line in text.Split(new [] { Environment.NewLine }, StringSplitOptions.None))
+            var lines = text.Split(new[] {Environment.NewLine}, StringSplitOptions.None)
+                .Where(line => !String.IsNullOrWhiteSpace(line));
+            foreach (string line in lines)
             {
                 yield return ParseShape(line, context);
             }

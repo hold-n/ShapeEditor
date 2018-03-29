@@ -3,25 +3,29 @@ using System.Drawing;
 
 namespace Shapes
 {
+    /// <summary>
+    /// Class that describes a brush and can create brushes by the description.
+    /// </summary>
     public class BrushBillet
     {
-        private readonly Color color_;
-        private readonly BrushType type_;
-
         public BrushBillet(Color color, BrushType type)
         {
-            color_ = color;
-            type_ = type;
+            Color = color;
+            Type = type;
         }
+
+        public Color Color { get; }
+
+        public BrushType Type { get; }
 
         public Brush CreateBrush()
         {
-            switch (type_)
+            switch (Type)
             {
                 case BrushType.Solid:
-                    return new SolidBrush(color_);
+                    return new SolidBrush(Color);
                 default:
-                    throw new InvalidOperationException($"Invalid brush type: {type_}");
+                    throw new InvalidOperationException($"Invalid brush type: {Type}");
             }
         }
     }

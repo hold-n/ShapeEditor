@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Shapes;
+using Shapes.Interpretation;
 
-namespace Lab2
+namespace ShapeEditor
 {
     public partial class MainForm : Form
     {
@@ -15,15 +16,7 @@ namespace Lab2
         {
             InitializeComponent();
 
-            var shapeFactory = new ShapeFactory();
-            shapeFactory.Register("line", new LineShapeBuilder());
-            shapeFactory.Register("arc", new ArcShapeBuilder());
-            shapeFactory.Register("curve", new CurveShapeBuilder());
-            shapeFactory.Register("rectangle", new RectangleShapeBuilder());
-            shapeFactory.Register("ellipse", new EllipseShapeBuilder());
-            shapeFactory.Register("string", new StringShapeBuilder());
-
-            interpreter_ = new ShapeInterpreter(shapeFactory);
+            interpreter_ = interpreter;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
