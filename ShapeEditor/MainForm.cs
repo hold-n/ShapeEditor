@@ -9,8 +9,9 @@ namespace ShapeEditor
 {
     public partial class MainForm : Form
     {
-        private List<IShape> shapes_ = new List<IShape>();
         private readonly ShapeInterpreter interpreter_;
+
+        private readonly List<IShape> shapes_ = new List<IShape>();
 
         public MainForm(ShapeInterpreter interpreter)
         {
@@ -29,10 +30,30 @@ namespace ShapeEditor
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Redraw();
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && e.Control)
+            {
+                Redraw();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void LoadShapes()
+        {
+            var context = new DrawingContext();
+            shapes_.Clear();
+            shapes_.AddRange(interpreter_.Interpret(textBox1.Text, context).ToList());
+        }
+
+        private void Redraw()
+        {
             try
             {
-                var context = new DrawingContext();
-                shapes_ = interpreter_.Interpret(textBox1.Text, context).ToList();
+                LoadShapes();
                 pictureBox1.Invalidate();
                 label1.Text = "";
             }
