@@ -83,6 +83,10 @@
       <Project>{0AF0127F-E5E1-4BF0-BDE3-1F0AD75BA840}</Project>
       <Name>Shapes.Interpretation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Shapes.Serialization\Shapes.Serialization.csproj">
+      <Project>{0452B427-B740-455E-844A-D502F11CD0CA}</Project>
+      <Name>Shapes.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shapes\Shapes.csproj">
       <Project>{7E928C2D-00F0-49C6-AFEF-AF63C25126A4}</Project>
       <Name>Shapes</Name>

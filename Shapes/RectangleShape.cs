@@ -1,26 +1,31 @@
 ﻿using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Shapes
 {
+    [DataContract]
     public class RectangleShape : IShape
     {
-        private readonly Point upperLeftCorner_;
-        
+        [DataMember] private readonly Point upperLeftCorner_;
+        [DataMember] private readonly int height_;
+        [DataMember] private readonly PenBillet penBillet_;
+        [DataMember] private readonly int width_;
+
         public RectangleShape(Point upperLeftCorner, Point lowerRightCorner, PenBillet billet)
         {
             upperLeftCorner_ = upperLeftCorner;
-            PenBillet = billet;
-            Width = lowerRightCorner.X - upperLeftCorner.X;
-            Height = lowerRightCorner.Y - upperLeftCorner.Y;
+            penBillet_ = billet;
+            width_= lowerRightCorner.X - upperLeftCorner.X;
+            height_ = lowerRightCorner.Y - upperLeftCorner.Y;
         }
 
-        public int Height { get; }
+        public int Height => height_;
 
-        public PenBillet PenBillet { get; }
+        public PenBillet PenBillet => penBillet_;
 
         public Point UpperLeftCorner => upperLeftCorner_.Clone();
 
-        public int Width { get; }
+        public int Width => width_;
 
         public void Draw(Graphics graphics)
         {

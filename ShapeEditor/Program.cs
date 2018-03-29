@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Shapes.Interpretation;
+using Shapes.Serialization;
 
 namespace ShapeEditor
 {
@@ -29,7 +30,8 @@ namespace ShapeEditor
             shapeFactory.Register("string", new StringShapeBuilder());
 
             var interpreter = new ShapeInterpreter(shapeFactory);
-            return new MainForm(interpreter);
+            var loader = new StreamShapeLoader();
+            return new MainForm(interpreter, loader);
         }
     }
 }

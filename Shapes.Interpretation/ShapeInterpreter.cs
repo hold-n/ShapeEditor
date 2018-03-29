@@ -8,7 +8,7 @@ namespace Shapes.Interpretation
     /// <summary>
     /// An interpreter creating shapes from their string representation.
     /// </summary>
-    public class ShapeInterpreter
+    public class ShapeInterpreter : IShapeInterpreter
     {
         private static readonly Regex ShapeRegex = new Regex(@"^(?<name>\w+)\((?<coords>[^\)]*)\)$");
 
@@ -25,6 +25,7 @@ namespace Shapes.Interpretation
                 .Where(line => !String.IsNullOrWhiteSpace(line));
             foreach (string line in lines)
             {
+                // TODO: add support for control commands changing context
                 yield return ParseShape(line, context);
             }
         }

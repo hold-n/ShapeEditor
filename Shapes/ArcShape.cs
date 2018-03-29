@@ -1,13 +1,18 @@
 ﻿using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Shapes
 {
     /// <summary>
     /// An arc shape.
     /// </summary>
+    [DataContract]
     public class ArcShape : IShape
     {
-        private readonly Rectangle rect_;
+        [DataMember] private readonly Rectangle rect_;
+        [DataMember] private readonly float startAngle_;
+        [DataMember] private readonly float sweepAngle_;
+        [DataMember] private readonly PenBillet penBillet_;
 
         /// <summary>
         /// Creates an arc shape.
@@ -19,24 +24,24 @@ namespace Shapes
         public ArcShape(Rectangle rect, float startAngle, float sweepAngle, PenBillet penBillet)
         {
             rect_ = rect;
-            StartAngle = startAngle;
-            SweepAngle = sweepAngle;
-            PenBillet = penBillet;
+            startAngle_ = startAngle;
+            sweepAngle_ = sweepAngle;
+            penBillet_ = penBillet;
         }
 
         public Rectangle EllipseRectangle => rect_.Clone();
 
-        public float StartAngle { get; }
+        public float StartAngle => startAngle_;
 
-        public float SweepAngle { get; }
+        public float SweepAngle => sweepAngle_;
 
-        public PenBillet PenBillet { get; }
+        public PenBillet PenBillet => penBillet_;
 
         public void Draw(Graphics graphics)
         {
             using (var pen = PenBillet.CreatePen())
             {
-                graphics.DrawArc(pen, rect_, StartAngle, SweepAngle);
+                graphics.DrawArc(pen, rect_, startAngle_, sweepAngle_);
             }
         }
     }

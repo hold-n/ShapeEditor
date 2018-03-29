@@ -1,26 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Shapes;
 using Shapes.Interpretation;
+using Shapes.Serialization;
 
 namespace ShapeEditor
 {
     public partial class MainForm : Form
     {
-        private readonly ShapeInterpreter interpreter_;
-
+        private readonly IShapeInterpreter interpreter_;
+        private readonly IStreamShapeLoader loader_;
         private readonly List<IShape> shapes_ = new List<IShape>();
 
-        public MainForm(ShapeInterpreter interpreter)
+        public MainForm(IShapeInterpreter interpreter, IStreamShapeLoader loader)
         {
             InitializeComponent();
 
             interpreter_ = interpreter;
+            loader_ = loader;
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        #region Logic
+
+        private ICollection<IShape> InterpretShapes(string text)
+        {
+            try
+            {
+                // TODO?: persist context
+                var context = new DrawingContext();
+                return interpreter_.Interpret(text, context).ToList();
+            }
+            catch (Exception ex)
+            {
+                errorLabel.Text = ex.Message;
+                return null;
+            }
+        }
+
+        private ICollection<IShape> LoadShapesFromStream(Stream stream)
+        {
+            try
+            {
+                return loader_.Load(stream).ToList();
+            }
+            catch (Exception ex)
+            {
+                errorLabel.Text = ex.Message;
+                return null;
+            }
+        }
+
+        private void Redraw(ICollection<IShape> shapes)
+        {
+            if (shapes != null)
+            {
+                shapes_.Clear();
+                shapes_.AddRange(shapes);
+                shapePictureBox.Invalidate();
+                errorLabel.Text = "";
+            }
+        }
+
+        private void SaveShapesToStream(Stream stream)
+        {
+            try
+            {
+                loader_.Save(stream, shapes_);
+            }
+            catch (Exception ex)
+            {
+                errorLabel.Text = ex.Message;
+            }
+        }
+
+        #endregion
+
+        private void shapePictureBox_Paint(object sender, PaintEventArgs e)
         {
             foreach (IShape shape in shapes_)
             {
@@ -28,38 +86,44 @@ namespace ShapeEditor
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void interpretButton_Click(object sender, EventArgs e)
         {
-            Redraw();
+            var shapes = InterpretShapes(interpretTextArea.Text);
+            Redraw(shapes);
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void interpretTextArea_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && e.Control)
+            if (e.Control && e.KeyCode == Keys.Enter)
             {
-                Redraw();
                 e.SuppressKeyPress = true;
+                var shapes = InterpretShapes(interpretTextArea.Text);
+                Redraw(shapes);
             }
         }
 
-        private void LoadShapes()
+        private void openFileButton_Click(object sender, EventArgs e)
         {
-            var context = new DrawingContext();
-            shapes_.Clear();
-            shapes_.AddRange(interpreter_.Interpret(textBox1.Text, context).ToList());
+            DialogResult dialogResult = openFileDialog1.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                using (Stream stream = openFileDialog1.OpenFile())
+                {
+                    var shapes = LoadShapesFromStream(stream);
+                    Redraw(shapes);
+                }
+            }
         }
 
-        private void Redraw()
+        private void saveToFileButton_Click(object sender, EventArgs e)
         {
-            try
+            DialogResult dialogResult = saveFileDialog1.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
-                LoadShapes();
-                pictureBox1.Invalidate();
-                label1.Text = "";
-            }
-            catch (Exception ex)
-            {
-                label1.Text = ex.Message;
+                using (Stream stream = saveFileDialog1.OpenFile())
+                {
+                    SaveShapesToStream(stream);
+                }
             }
         }
     }
