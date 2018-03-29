@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes", "Shapes\Shapes.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeEditor", "ShapeEditor\ShapeEditor.csproj", "{424063B9-B3B1-46B2-B8BD-B839D85F7C2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes.Interpretation", "Shapes.Interpretation\Shapes.Interpretation.csproj", "{0AF0127F-E5E1-4BF0-BDE3-1F0AD75BA840}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shapes.Interpretation", "Shapes.Interpretation\Shapes.Interpretation.csproj", "{0AF0127F-E5E1-4BF0-BDE3-1F0AD75BA840}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes.Serialization", "Shapes.Serialization\Shapes.Serialization.csproj", "{0452B427-B740-455E-844A-D502F11CD0CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shapes.Interpretation.ThirdParty", "Shapes.Interpretation.ThirdParty\Shapes.Interpretation.ThirdParty.csproj", "{D8234917-9350-4219-ABF9-4F3836372832}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0452B427-B740-455E-844A-D502F11CD0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0452B427-B740-455E-844A-D502F11CD0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0452B427-B740-455E-844A-D502F11CD0CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8234917-9350-4219-ABF9-4F3836372832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8234917-9350-4219-ABF9-4F3836372832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8234917-9350-4219-ABF9-4F3836372832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8234917-9350-4219-ABF9-4F3836372832}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

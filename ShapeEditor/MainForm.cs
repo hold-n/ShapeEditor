@@ -31,6 +31,7 @@ namespace ShapeEditor
             {
                 // TODO?: persist context
                 var context = new DrawingContext();
+                // TODO: display available keys
                 return interpreter_.Interpret(text, context).ToList();
             }
             catch (Exception ex)

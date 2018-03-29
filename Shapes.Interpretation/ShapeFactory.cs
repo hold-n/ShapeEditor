@@ -7,7 +7,7 @@ namespace Shapes.Interpretation
     /// <summary>
     /// A factory creating shapes by class and parameters.
     /// </summary>
-    public class ShapeFactory
+    public class ShapeFactory : IShapeFactory
     {
         private readonly Dictionary<string, IShapeBuilder> builders_ = new Dictionary<string, IShapeBuilder>();
 
@@ -32,14 +32,16 @@ namespace Shapes.Interpretation
         /// </summary>
         /// <param name="name"></param>
         /// <param name="shapeBuilder"></param>
-        public void Register(string name, IShapeBuilder shapeBuilder)
+        /// <returns>Whether the builder has been successfully registered.</returns>
+        public bool Register(string name, IShapeBuilder shapeBuilder)
         {
             var key = name.ToLowerInvariant();
             if (builders_.ContainsKey(key))
             {
-                throw new ArgumentException($"The key {key} is already registered.");
+                return false;
             }
             builders_[name.ToLowerInvariant()] = shapeBuilder;
+            return true;
         }
     }
 }

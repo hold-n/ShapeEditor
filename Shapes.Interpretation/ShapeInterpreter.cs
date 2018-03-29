@@ -12,9 +12,9 @@ namespace Shapes.Interpretation
     {
         private static readonly Regex ShapeRegex = new Regex(@"^(?<name>\w+)\((?<coords>[^\)]*)\)$");
 
-        private readonly ShapeFactory shapeFactory_;
+        private readonly IShapeFactory shapeFactory_;
 
-        public ShapeInterpreter(ShapeFactory shapeFactory)
+        public ShapeInterpreter(IShapeFactory shapeFactory)
         {
             shapeFactory_ = shapeFactory;
         }
