@@ -24,7 +24,7 @@ namespace Shapes.Interpretation
         {
             return builders_.TryGetValue(name.ToLowerInvariant(), out var builder)
                 ? builder.Build(parameters.ToList(), context)
-                : throw new ArgumentException($"Shape name {name} is not registered.");
+                : throw new ArgumentException($"Shape name '{name}' is not registered.");
         }
 
         /// <summary>

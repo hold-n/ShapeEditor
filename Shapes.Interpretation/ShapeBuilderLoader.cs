@@ -15,13 +15,14 @@ namespace Shapes.Interpretation
             factory_ = factory;
         }
 
-        public IEnumerable<string> Load(Stream stream)
+        public IEnumerable<string> Load(Stream dllStream)
         {
-            // TODO: think of another ways to load plugins
-            var assembly = GetAssembly(stream);
+            // TODO: think of another ways to load plugins. Using attributes means key is fixed at plugin compile time
+            // TODO: smth like plugin manager with Inflate(IShapeFactory)
             var builderPairs =
-                from type in assembly.GetExportedTypes()
-                let attribute = (ShapeBuilderAttribute)type.GetCustomAttribute(typeof(ShapeBuilderAttribute))
+                from type in GetAssembly(dllStream).GetExportedTypes()
+                where type.GetInterfaces().Contains(typeof(IShapeBuilder))
+                let attribute = type.GetCustomAttribute<ShapeBuilderAttribute>()
                 where attribute != null
                 select new {type, attribute};
             var registeredKeys = new List<string>();
@@ -37,7 +38,7 @@ namespace Shapes.Interpretation
                 }
                 catch
                 {
-                    // TODO: log. can be instantiation error, casting error
+                    // TODO: log. can be instantiation error
                 }
             }
 

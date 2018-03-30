@@ -35,7 +35,7 @@ namespace Shapes.Interpretation
             var match = ShapeRegex.Match(line);
             if (!match.Success)
             {
-                throw new FormatException($"Invalid shape declaration: {line}");
+                throw new FormatException($"Invalid shape declaration: '{line}'.");
             }
             var shapeName = match.Groups["name"].Value;
             var parameters = match.Groups["coords"].Value

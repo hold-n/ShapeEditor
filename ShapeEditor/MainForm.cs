@@ -29,7 +29,6 @@ namespace ShapeEditor
         {
             try
             {
-                // TODO?: persist context
                 var context = new DrawingContext();
                 // TODO: display available keys
                 return interpreter_.Interpret(text, context).ToList();
@@ -126,6 +125,11 @@ namespace ShapeEditor
                     SaveShapesToStream(stream);
                 }
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            interpretTextArea.Select();
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Shapes.Interpretation
 {
     public interface IShapeBuilderLoader
     {
-        IEnumerable<string> Load(Stream stream);
+        IEnumerable<string> Load(Stream dllStream);
     }
 }
