@@ -3,8 +3,10 @@ using System.IO;
 
 namespace Shapes.Serialization
 {
-    public interface IStreamShapeLoader
+    public interface IShapeLoader
     {
+        string Extension { get; }
+
         IEnumerable<IShape> Load(Stream stream);
 
         void Save(Stream stream, IEnumerable<IShape> shapes);

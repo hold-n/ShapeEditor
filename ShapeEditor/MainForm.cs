@@ -12,15 +12,15 @@ namespace ShapeEditor
     public partial class MainForm : Form
     {
         private readonly IShapeInterpreter interpreter_;
-        private readonly IStreamShapeLoader loader_;
+        private readonly IShapeLoaderFactory shapeLoaderFactory_;
         private readonly List<IShape> shapes_ = new List<IShape>();
 
-        public MainForm(IShapeInterpreter interpreter, IStreamShapeLoader loader)
+        public MainForm(IShapeInterpreter interpreter, IShapeLoaderFactory shapeLoaderFactory)
         {
             InitializeComponent();
 
             interpreter_ = interpreter;
-            loader_ = loader;
+            shapeLoaderFactory_ = shapeLoaderFactory;
         }
 
         #region Logic
@@ -40,11 +40,11 @@ namespace ShapeEditor
             }
         }
 
-        private ICollection<IShape> LoadShapesFromStream(Stream stream)
+        private ICollection<IShape> LoadShapesFromStream(IShapeLoader shapeLoader, Stream stream)
         {
             try
             {
-                return loader_.Load(stream).ToList();
+                return shapeLoader.Load(stream).ToList();
             }
             catch (Exception ex)
             {
@@ -64,11 +64,11 @@ namespace ShapeEditor
             }
         }
 
-        private void SaveShapesToStream(Stream stream)
+        private void SaveShapesToStream(IShapeLoader shapeLoader, Stream stream)
         {
             try
             {
-                loader_.Save(stream, shapes_);
+                shapeLoader.Save(stream, shapes_);
             }
             catch (Exception ex)
             {
@@ -104,12 +104,14 @@ namespace ShapeEditor
 
         private void openFileButton_Click(object sender, EventArgs e)
         {
+            IShapeLoader shapeLoader = shapeLoaderFactory_.Create();
+            openFileDialog1.DefaultExt = shapeLoader.Extension;
             DialogResult dialogResult = openFileDialog1.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
                 using (Stream stream = openFileDialog1.OpenFile())
                 {
-                    var shapes = LoadShapesFromStream(stream);
+                    var shapes = LoadShapesFromStream(shapeLoader, stream);
                     Redraw(shapes);
                 }
             }
@@ -117,12 +119,14 @@ namespace ShapeEditor
 
         private void saveToFileButton_Click(object sender, EventArgs e)
         {
+            IShapeLoader shapeLoader = shapeLoaderFactory_.Create();
+            saveFileDialog1.DefaultExt = shapeLoader.Extension;
             DialogResult dialogResult = saveFileDialog1.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
                 using (Stream stream = saveFileDialog1.OpenFile())
                 {
-                    SaveShapesToStream(stream);
+                    SaveShapesToStream(shapeLoader, stream);
                 }
             }
         }

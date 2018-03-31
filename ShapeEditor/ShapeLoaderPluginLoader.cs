@@ -1,0 +1,41 @@
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using Shapes.Serialization;
+
+namespace ShapeEditor
+{
+    public class ShapeLoaderPluginLoader : IPluginLoader
+    {
+        private readonly IShapeLoaderFactory loaderFactory_;
+
+        public ShapeLoaderPluginLoader(IShapeLoaderFactory loaderFactory)
+        {
+            loaderFactory_ = loaderFactory;
+        }
+
+        public void Load(Assembly assembly)
+        {
+            // TODO: think of a better approach to loader, attribute is too restricting
+            var builderPairs =
+                from type in assembly.GetExportedTypes()
+                where type.GetInterfaces().Contains(typeof(IShapeLoaderBuilder))
+                let attr = type.GetCustomAttribute<ShapeLoaderBuilderAttribute>()
+                where attr != null
+                select new { type, attr };
+            foreach (var builderPair in builderPairs)
+            {
+                try
+                {
+                    var loaderBuilder = (IShapeLoaderBuilder)Activator.CreateInstance(builderPair.type);
+                    var info = new ShapeLoaderInfo(builderPair.type.FullName, builderPair.attr.Title, loaderBuilder);
+                    loaderFactory_.Register(info);
+                }
+                catch
+                {
+                    // TODO: log. can be instantiation error
+                }
+            }
+        }
+    }
+}

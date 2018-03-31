@@ -144,12 +144,7 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.DefaultExt = "xml";
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.DefaultExt = "xml";
             // 
             // MainForm
             // 

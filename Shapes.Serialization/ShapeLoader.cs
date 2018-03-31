@@ -4,9 +4,11 @@ using System.Runtime.Serialization;
 
 namespace Shapes.Serialization
 {
-    public class StreamShapeLoader : IStreamShapeLoader
+    public class ShapeLoader : IShapeLoader
     {
         private readonly NetDataContractSerializer serializer_ = new NetDataContractSerializer();
+
+        public string Extension => "xml";
 
         public IEnumerable<IShape> Load(Stream stream)
         {
@@ -17,5 +19,5 @@ namespace Shapes.Serialization
         {
             serializer_.Serialize(stream, shapes);
         }
-    }
+    } 
 }
