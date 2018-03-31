@@ -22,7 +22,7 @@ namespace Shapes.Interpretation.ThirdParty
             var end = new Point(intParameters[2], intParameters[3]);
             var middleX = (start.X + end.X) / 2;
 
-            var lineShape1 = new LineShape(new Point(start.X, end.Y), new Point(middleX, start.X), context.CreatePenBillet());
+            var lineShape1 = new LineShape(new Point(start.X, end.Y), new Point(middleX, start.Y), context.CreatePenBillet());
             var lineShape2 = new LineShape(new Point(middleX, start.Y), new Point(end.X, end.Y), context.CreatePenBillet());
             var lineShape3 = new LineShape(new Point(start.X, end.Y), new Point(end.X, end.Y), context.CreatePenBillet());
             var lineShape4 = new LineShape(new Point(middleX, start.Y), new Point(middleX, end.Y), context.CreatePenBillet());
