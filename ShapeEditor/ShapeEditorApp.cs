@@ -59,9 +59,8 @@ namespace ShapeEditor
                 // TODO: add a plugin manager or smth
                 Assembly assembly = GetAssembly(dllFileName);
                 pluginLoader_.Load(assembly);
-                // TODO: load plugins for shape loader
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // TODO: log
             }

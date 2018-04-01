@@ -1,9 +1,9 @@
 ﻿namespace Shapes.Serialization.ThirdParty
 {
     [ShapeLoaderBuilder("Check integrity")]
-    public class ChecksumShapeLoaderBuilder : IShapeLoaderBuilder
+    public class ChecksumShapeLoaderPacker : IShapeLoaderPacker
     {
-        public IShapeLoader Decorate(IShapeLoader shapeLoader)
+        public IShapeLoader Wrap(IShapeLoader shapeLoader)
         {
             return new ChecksumShapeLoaderDecorator(shapeLoader, new Md5Hash());
         }

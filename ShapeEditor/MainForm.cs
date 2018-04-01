@@ -30,7 +30,7 @@ namespace ShapeEditor
             try
             {
                 var context = new DrawingContext();
-                // TODO: display available keys
+                // TODO: display available keywords
                 return interpreter_.Interpret(text, context).ToList();
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace ShapeEditor
         private void openFileButton_Click(object sender, EventArgs e)
         {
             IShapeLoader shapeLoader = shapeLoaderFactory_.Create();
-            openFileDialog1.DefaultExt = shapeLoader.Extension;
+            openFileDialog1.DefaultExt = shapeLoader.FileExtension;
             DialogResult dialogResult = openFileDialog1.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
@@ -120,7 +120,7 @@ namespace ShapeEditor
         private void saveToFileButton_Click(object sender, EventArgs e)
         {
             IShapeLoader shapeLoader = shapeLoaderFactory_.Create();
-            saveFileDialog1.DefaultExt = shapeLoader.Extension;
+            saveFileDialog1.DefaultExt = shapeLoader.FileExtension;
             DialogResult dialogResult = saveFileDialog1.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {

@@ -15,7 +15,7 @@ namespace Shapes.Serialization.ThirdParty
             loader_ = loader;
         }
 
-        public string Extension => "zip";
+        public string FileExtension => "zip";
 
         public IEnumerable<IShape> Load(Stream stream)
         {
@@ -37,7 +37,7 @@ namespace Shapes.Serialization.ThirdParty
         {
             using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, true))
             {
-                ZipArchiveEntry entry = archive.CreateEntry(Path.ChangeExtension("shapes", loader_.Extension));
+                ZipArchiveEntry entry = archive.CreateEntry(Path.ChangeExtension("shapes", loader_.FileExtension));
                 using (Stream zipStream = entry.Open())
                 {
                     loader_.Save(zipStream, shapes);

@@ -19,7 +19,7 @@ namespace ShapeEditor
             // TODO: think of a better approach to loader, attribute is too restricting
             var builderPairs =
                 from type in assembly.GetExportedTypes()
-                where type.GetInterfaces().Contains(typeof(IShapeLoaderBuilder))
+                where type.GetInterfaces().Contains(typeof(IShapeLoaderPacker))
                 let attr = type.GetCustomAttribute<ShapeLoaderBuilderAttribute>()
                 where attr != null
                 select new { type, attr };
@@ -27,7 +27,7 @@ namespace ShapeEditor
             {
                 try
                 {
-                    var loaderBuilder = (IShapeLoaderBuilder)Activator.CreateInstance(builderPair.type);
+                    var loaderBuilder = (IShapeLoaderPacker)Activator.CreateInstance(builderPair.type);
                     var info = new ShapeLoaderInfo(builderPair.type.FullName, builderPair.attr.Title, loaderBuilder);
                     loaderFactory_.Register(info);
                 }

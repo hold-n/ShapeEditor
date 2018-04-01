@@ -16,12 +16,13 @@ namespace Shapes.Serialization
 
         public IEnumerable<string> Keys => shapeLoaders_.Keys;
 
+        // TODO?: pass active keys as parameters
         public IShapeLoader Create()
         {
             var loader = coreLoader_;
             foreach (ShapeLoaderInfo info in activeLoaders_)
             {
-                loader = info.Builder.Decorate(loader);
+                loader = info.Packer.Wrap(loader);
             }
             return loader;
         }
@@ -37,7 +38,7 @@ namespace Shapes.Serialization
             return false;
         }
 
-        public IEnumerable<ShapeLoaderInfo> SetActiveKeys(IEnumerable<string> keys)
+        public IList<ShapeLoaderInfo> SetActiveKeys(IList<string> keys)
         {
             var loaders = keys.Select(key =>
             {
@@ -47,6 +48,11 @@ namespace Shapes.Serialization
             activeLoaders_.Clear();
             activeLoaders_.AddRange(loaders);
             return activeLoaders_;
+        }
+
+        public bool TryGetLoaderInfo(string key, out ShapeLoaderInfo info)
+        {
+            return shapeLoaders_.TryGetValue(key, out info);
         }
     }
 }

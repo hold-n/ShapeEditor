@@ -5,7 +5,7 @@ namespace Shapes.Serialization
 {
     public interface IShapeLoader
     {
-        string Extension { get; }
+        string FileExtension { get; }
 
         IEnumerable<IShape> Load(Stream stream);
 

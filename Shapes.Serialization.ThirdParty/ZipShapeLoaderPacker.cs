@@ -1,9 +1,9 @@
 ﻿namespace Shapes.Serialization.ThirdParty
 {
     [ShapeLoaderBuilder("Archive")]
-    public class ZipShapeLoaderBuilder : IShapeLoaderBuilder
+    public class ZipShapeLoaderPacker : IShapeLoaderPacker
     {
-        public IShapeLoader Decorate(IShapeLoader shapeLoader)
+        public IShapeLoader Wrap(IShapeLoader shapeLoader)
         {
             return new ZipShapeLoaderDecorator(shapeLoader);
         }

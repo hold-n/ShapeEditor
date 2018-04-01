@@ -8,7 +8,7 @@ namespace Shapes.Serialization
     {
         private readonly NetDataContractSerializer serializer_ = new NetDataContractSerializer();
 
-        public string Extension => "xml";
+        public string FileExtension => "xml";
 
         public IEnumerable<IShape> Load(Stream stream)
         {

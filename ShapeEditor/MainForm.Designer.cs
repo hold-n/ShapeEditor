@@ -142,10 +142,6 @@
             this.openFIleButton.UseVisualStyleBackColor = true;
             this.openFIleButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);

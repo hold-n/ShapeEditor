@@ -15,7 +15,7 @@ namespace Shapes.Serialization.ThirdParty
             hash_ = hash;
         }
 
-        public string Extension => "dat";
+        public string FileExtension => "dat";
 
         public IEnumerable<IShape> Load(Stream stream)
         {

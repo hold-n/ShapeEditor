@@ -41,7 +41,5 @@ namespace ShapeEditor
             var app = new ShapeEditorApp(pluginLoader, MainFormFactory);
             app.Run();
         }
-
-
     }
 }
