@@ -11,12 +11,15 @@ namespace Shapes.Interpretation
     public class ShapeInterpreter : IShapeInterpreter
     {
         private static readonly Regex ShapeRegex = new Regex(@"^(?<name>\w+)\((?<coords>[^\)]*)\)$");
+        private static readonly Regex ControlRegex = new Regex(@"^@(?<name>[^:]+)\s*:\s*(?<value>[^\n]*)$");
 
         private readonly IShapeFactory shapeFactory_;
+        private readonly IControlCommandProcessor processor_;
 
-        public ShapeInterpreter(IShapeFactory shapeFactory)
+        public ShapeInterpreter(IShapeFactory shapeFactory, IControlCommandProcessor processor)
         {
             shapeFactory_ = shapeFactory;
+            processor_ = processor;
         }
 
         public IEnumerable<IShape> Interpret(string text, DrawingContext context)
@@ -25,9 +28,32 @@ namespace Shapes.Interpretation
                 .Where(line => !String.IsNullOrWhiteSpace(line));
             foreach (string line in lines)
             {
-                // TODO: add support for control commands changing context
-                yield return ParseShape(line, context);
+                if (IsControl(line))
+                {
+                    ParseControl(line, context);
+                }
+                else
+                {
+                    yield return ParseShape(line, context);
+                }
             }
+        }
+
+        private bool IsControl(string line)
+        {
+            return line.StartsWith("@");
+        }
+
+        private void ParseControl(string line, DrawingContext context)
+        {
+            var match = ControlRegex.Match(line);
+            if (!match.Success)
+            {
+                throw new FormatException($"Invalid control statement: '{line}'");
+            }
+            var commandName = match.Groups["name"].Value.Trim();
+            var commandValue = match.Groups["value"].Value.Trim();
+            processor_.Process(commandName, commandValue, context);
         }
 
         private IShape ParseShape(string line, DrawingContext context)

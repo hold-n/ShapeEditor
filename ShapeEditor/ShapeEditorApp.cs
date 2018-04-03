@@ -60,7 +60,7 @@ namespace ShapeEditor
                 Assembly assembly = GetAssembly(dllFileName);
                 pluginLoader_.Load(assembly);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // TODO: log
             }

@@ -13,7 +13,6 @@ namespace ShapeEditor
         [STAThread]
         static void Main()
         {
-            // TODO: DI container
             // TODO: init by attribute?
 
             // NOTE: shapeFactory should be registered as singleton
@@ -25,11 +24,15 @@ namespace ShapeEditor
             shapeFactory.Register("ellipse", new EllipseShapeBuilder());
             shapeFactory.Register("string", new StringShapeBuilder());
 
+            var commandProcessor = new ControlCommandProcessor();
+            commandProcessor.Register("linecolor", new LineColorContextUpdater());
+            commandProcessor.Register("linewidth", new LineWidthContextUpdater());
+
             var shapeLoader = new ShapeLoader();
             // NOTE: shapeLoaderFactory should be registered as singleton
             var shapeLoaderFactory = new ShapeLoaderFactory(shapeLoader);
 
-            var interpreter = new ShapeInterpreter(shapeFactory);
+            var interpreter = new ShapeInterpreter(shapeFactory, commandProcessor);
             Form MainFormFactory() => new MainForm(interpreter, shapeLoaderFactory);
 
             var pluginLoader = new AggregatePluginLoader(new IPluginLoader[]
