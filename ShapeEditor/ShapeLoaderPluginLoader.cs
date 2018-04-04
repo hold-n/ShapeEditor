@@ -37,5 +37,27 @@ namespace ShapeEditor
                 }
             }
         }
+
+        private void LoadAdapters(Assembly assembly)
+        {
+            var types =
+                from type in assembly.GetExportedTypes()
+                where type.GetInterfaces().Contains(typeof(IStreamWrapper))
+                select type;
+            foreach (var type in types)
+            {
+                try
+                {
+                    var wrapper = (IStreamWrapper)Activator.CreateInstance(type);
+                    var loaderBuilder = new AdapterLoaderPacker(wrapper);
+                    var info = new ShapeLoaderInfo(type.FullName, type.Name, loaderBuilder);
+                    loaderFactory_.Register(info);
+                }
+                catch
+                {
+                    // TODO: log. can be instantiation error
+                }
+            }
+        }
     }
 }
